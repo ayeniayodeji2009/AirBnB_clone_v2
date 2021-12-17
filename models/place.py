@@ -5,6 +5,7 @@ from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -28,3 +29,18 @@ class Place(BaseModel, Base):
     cities = relationship(
         'City', back_populates='places'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    reviews = relationship(
+        'Review',
+        cascade="all, delete, delete-orphan",
+        back_populates='place'
+    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+
+    @property
+    def reviews(self):
+        """Returns the reviews of this Place"""
+        from models import storage
+        reviews_of_place = []
+        for value in storage.all(Review).values():
+            if value.place_id == self.id:
+                reviews_of_place.append(value)
+        return reviews_of_place
