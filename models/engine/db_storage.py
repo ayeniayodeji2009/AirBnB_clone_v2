@@ -19,7 +19,7 @@ class DBStorage:
     __engine = None
     __session = None
 
-    def __init__(self, cls = None):
+    def __init__(self, cls=None):
         """Initializes the SQL database storage"""
         user = os.getenv('HBNB_MYSQL_USER')
         pword = os.getenv('HBNB_MYSQL_PWD')
@@ -31,12 +31,12 @@ class DBStorage:
         )
         self.__engine = create_engine(
             DATABASE_URL,
-            pool_pre_ping = True
+            pool_pre_ping=True
         )
         if env == 'test':
             Base.metadata.drop_all()
 
-    def all(self, cls = None):
+    def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         objects = dict()
         all_classes = (User, State, City, Amenity, Place, Review)
@@ -46,11 +46,12 @@ class DBStorage:
             objects[obj_key] = obj
         return objects
 
-    def delete(self, obj = None):
+    def delete(self, obj=None):
         """Removes an object from the storage database"""
         if obj is not None:
-            self.__session.query(type(obj)).filter(type(obj).id == obj.id).delete(
-                synchronize_session = False
+            self.__session.query(type(obj)).filter(
+                type(obj).id == obj.id).delete(
+                synchronize_session=False
             )
 
     def new(self, obj):
@@ -68,7 +69,7 @@ class DBStorage:
         """Loads storage database"""
         Base.metadata.create_all(self.__engine)
         SessionFactory = sessionmaker(
-            bind = self.__engine,
-            expire_on_commit = False
+            bind=self.__engine,
+            expire_on_commit=False
         )
         self.__session = scoped_session(SessionFactory)()
