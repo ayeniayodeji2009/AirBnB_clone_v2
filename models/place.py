@@ -3,9 +3,32 @@
 import os
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.schema import Table
 
 from models.base_model import BaseModel, Base
 from models.review import Review
+from models.amenity import Amenity
+
+
+place_amenity = Table(
+    'place_amenity',
+    Base.metadata,
+    Column(
+        'place_id',
+        String(60),
+        ForeignKey('places.id'),
+        nullable=False
+    ),
+    Column(
+        'amenity_id',
+        String(60),
+        ForeignKey('amenities.id'),
+        nullable=False
+    )
+)
+"""Represents the many to many relationship table \
+between Place and Amenity records.
+"""
 
 
 class Place(BaseModel, Base):
@@ -34,6 +57,12 @@ class Place(BaseModel, Base):
         cascade="all, delete, delete-orphan",
         back_populates='place'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    amenities = relationship(
+        'Amenity',
+        secondary=place_amenity,
+        viewonly=False,
+        back_populates='place_amenities'
+    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
 
     @property
     def reviews(self):
@@ -44,3 +73,20 @@ class Place(BaseModel, Base):
             if value.place_id == self.id:
                 reviews_of_place.append(value)
         return reviews_of_place
+
+    @property
+    def amenities(self):
+        """Returns the amenities of this Place"""
+        from models import storage
+        amenities_of_place = []
+        for value in storage.all(Amenity).values():
+            if value.id in self.amenity_ids:
+                amenities_of_place.append(value)
+        return amenities_of_place
+
+    @amenities.setter
+    def amenities(self, value):
+        """Adds an amenity to this Place"""
+        if type(value) is Amenity:
+            if value.id not in self.amenity_ids:
+                self.amenity_ids.append(value.id)
