@@ -6,9 +6,11 @@ HBNB_MYSQL_HOST=''
 HBNB_MYSQL_DB=''
 HBNB_MYSQL_PWD=''
 APP_FILE=''
+APP_ARGS=()
 
-if [[ $BASH_ARGC -gt 0 ]]; then
-    file="${BASH_ARGV[0]}"
+# get the application or command to run
+if [[ ${#@} -gt 0 ]]; then
+    file="$1"
     if [ -x "$file" ]; then
         start_str=$(echo "$file" | cut -c -2)
         if [[ "$start_str" != "./" ]]; then
@@ -17,21 +19,34 @@ if [[ $BASH_ARGC -gt 0 ]]; then
             APP_FILE="$file"
         fi
     else
-        echo -e "\e[31mError:\e[0m File doesn't exist"
-        exit 1
+        APP_FILE=$(echo "$file" | cut -d ' ' -f 1)
+        args_str=$(echo "$file" | cut -d ' ' -f 2-)
+        read -sr -a APP_ARGS < <(echo "$args_str")
     fi
 else
-    echo -e "\e[31mError:\e[0m No file provided"
+    echo -e "\e[31mError:\e[0m No file or command provided"
+    echo 'Usage: ./run.bash file|command [environment] [storage]'
     exit 1
 fi
 
-read -p 'Environment [dev]: ' -r HBNB_ENV
-if [[ "$HBNB_ENV" == '' ]]; then
-    HBNB_ENV='dev'
+# get the application environment
+if [[ ${#@} -gt 1 ]]; then
+    HBNB_ENV="$2"
+else
+    read -p 'Environment [dev]: ' -r HBNB_ENV
+    if [[ "$HBNB_ENV" == '' ]]; then
+        HBNB_ENV='dev'
+    fi
 fi
-read -p 'Storage Type [db]: ' -r HBNB_TYPE_STORAGE
-if [[ "$HBNB_TYPE_STORAGE" == '' ]]; then
-    HBNB_TYPE_STORAGE='db'
+
+# get the storage mechanism
+if [[ ${#@} -gt 2 ]]; then
+    HBNB_TYPE_STORAGE="$3"
+else
+    read -p 'Storage Type [db]: ' -r HBNB_TYPE_STORAGE
+    if [[ "$HBNB_TYPE_STORAGE" == '' ]]; then
+        HBNB_TYPE_STORAGE='db'
+    fi
 fi
 if [[ "$HBNB_TYPE_STORAGE" == 'db' ]]; then
     read -p 'User [hbnb_dev]: ' -r HBNB_MYSQL_USER
@@ -50,10 +65,11 @@ if [[ "$HBNB_TYPE_STORAGE" == 'db' ]]; then
 fi
 
 echo -e "Running \e[34m[$APP_FILE]\e[0m"
+# shellcheck disable=SC2086
 env HBNB_MYSQL_USER="$HBNB_MYSQL_USER" \
   HBNB_MYSQL_HOST="$HBNB_MYSQL_HOST" \
   HBNB_MYSQL_DB="$HBNB_MYSQL_DB" \
   HBNB_ENV="$HBNB_ENV" \
   HBNB_TYPE_STORAGE="$HBNB_TYPE_STORAGE" \
   HBNB_MYSQL_PWD="$HBNB_MYSQL_PWD" \
-  "$APP_FILE"
+  "$APP_FILE" ${APP_ARGS[*]}
