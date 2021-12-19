@@ -4,15 +4,7 @@ import os
 import unittest
 
 from models import storage
-from models.amenity import Amenity
 from models.base_model import BaseModel
-from models.city import City
-from models.engine.file_storage import FileStorage
-from models.place import Place
-from models.review import Review
-from models.state import State
-from models.user import User
-from tests import write_text_file, reset_store
 
 
 class TestFileStorage(unittest.TestCase):
@@ -38,21 +30,9 @@ class TestFileStorage(unittest.TestCase):
 
     def test_new(self):
         """ New object is correctly added to __objects """
-        store = FileStorage()
-        reset_store(store)
-        mdl = User(**{'id': '5'})
-        store.new(mdl)
-        self.assertEqual(len(store.all()), 1)
-        store.new(mdl)
-        store.new(mdl)
-        store.new(mdl)
-        self.assertEqual(len(store.all()), 1)
-        with self.assertRaises(TypeError):
-            store.new(mdl, None)
-        with self.assertRaises(TypeError):
-            store.new(mdl, mdl)
-        with self.assertRaises(AttributeError):
-            store.new(None)
+        new = BaseModel()
+        new.save()
+        self.assertTrue(new in storage.all().values())
 
     def test_all(self):
         """ __objects is properly returned """
@@ -76,7 +56,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """ FileStorage save method """
         new = BaseModel()
-        storage.save()
+        new.save()
         self.assertTrue(os.path.exists('file.json'))
 
     def test_reload(self):
