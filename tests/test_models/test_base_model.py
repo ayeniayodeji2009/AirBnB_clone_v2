@@ -8,9 +8,8 @@ import json
 import os
 
 
-class test_basemodel(unittest.TestCase):
+class TestBasemodel(unittest.TestCase):
     """ """
-
     def __init__(self, *args, **kwargs):
         """ """
         super().__init__(*args, **kwargs)
