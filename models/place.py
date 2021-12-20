@@ -17,13 +17,15 @@ place_amenity = Table(
         'place_id',
         String(60),
         ForeignKey('places.id'),
-        nullable=False
+        nullable=False,
+        primary_key=True
     ),
     Column(
         'amenity_id',
         String(60),
         ForeignKey('amenities.id'),
-        nullable=False
+        nullable=False,
+        primary_key=True
     )
 )
 """Represents the many to many relationship table
@@ -70,12 +72,11 @@ class Place(BaseModel, Base):
         cascade="all, delete, delete-orphan",
         backref='place'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
-    # amenities = relationship(
-    #     'Amenity',
-    #     secondary=place_amenity,
-    #     viewonly=False,
-    #     back_populates='place_amenities'
-    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    amenities = relationship(
+        'Amenity',
+        secondary=place_amenity,
+        viewonly=False,
+    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
 
     @property
     def reviews(self):
