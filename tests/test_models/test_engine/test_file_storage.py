@@ -6,16 +6,17 @@ import unittest
 from models import storage
 from models.base_model import BaseModel
 
-
+@unittest.skipIf(
+    os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
 class TestFileStorage(unittest.TestCase):
     """ Class to test the file storage method """
     def setUp(self):
         """ Set up test environment """
         del_list = []
-        for key in storage._FileStorage__objects.keys():
+        for key in storage.all().keys():
             del_list.append(key)
         for key in del_list:
-            del storage._FileStorage__objects[key]
+            del storage.all()[key]
 
     def tearDown(self):
         """ Remove storage file at end of tests """
@@ -61,7 +62,6 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload(self):
         """ Storage file is successfully loaded to __objects """
-        # self.skipTest(os.getenv('HBNB_TYPE_STORAGE') == 'db')
         new = BaseModel()
         new.save()
         storage.reload()

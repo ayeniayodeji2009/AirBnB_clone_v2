@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ """
+import os
+
 from tests.test_models.test_base_model import TestBasemodel
 from models.city import City
 
@@ -16,9 +18,11 @@ class TestCity(TestBasemodel):
     def test_state_id(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.state_id), str)
+        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+            self.assertEqual(type(new.state_id), str)
 
     def test_name(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+            self.assertEqual(type(new.name), str)

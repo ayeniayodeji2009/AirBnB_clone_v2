@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """ """
-from models.base_model import BaseModel
-import unittest
 import datetime
-from uuid import UUID
 import json
 import os
+import unittest
+from uuid import UUID
+
+from models.base_model import BaseModel
 
 
 class TestBasemodel(unittest.TestCase):
@@ -49,11 +50,12 @@ class TestBasemodel(unittest.TestCase):
     def test_save(self):
         """ Testing save """
         i = self.value()
-        i.save()
-        key = self.name + "." + i.id
-        with open('file.json', 'r') as f:
-            j = json.load(f)
-            self.assertEqual(j[key], i.to_dict())
+        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+            i.save()
+            key = self.name + "." + i.id
+            with open('file.json', 'r') as f:
+                j = json.load(f)
+                self.assertEqual(j[key], i.to_dict())
 
     def test_str(self):
         """ """
