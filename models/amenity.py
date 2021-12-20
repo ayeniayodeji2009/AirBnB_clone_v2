@@ -5,7 +5,6 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
-from models.place import place_amenity
 
 
 class Amenity(BaseModel, Base):
@@ -16,5 +15,5 @@ class Amenity(BaseModel, Base):
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     place_amenities = relationship(
         'Place',
-        secondary=place_amenity
+        secondary='place_amenity'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
