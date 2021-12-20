@@ -13,6 +13,6 @@ class Amenity(BaseModel, Base):
     name = Column(
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
-    place_amenities = relationship(
-        'Place', back_populates='amenities'
-    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    # place_amenities = relationship(
+    #     'Place', back_populates='amenities'
+    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None

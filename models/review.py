@@ -19,11 +19,11 @@ class Review(BaseModel, Base):
     text = Column(
         String(1024), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
-    user = relationship(
-        'User',
-        back_populates='reviews'
-    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
-    place = relationship(
-        'Place',
-        back_populates='reviews'
-    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    # user = relationship(
+    #     'User',
+    #     backref='user.id'
+    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    # place = relationship(
+    #     'Place',
+    #     back_populates='reviews'
+    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
