@@ -76,7 +76,7 @@ class Place(BaseModel, Base):
         'Amenity',
         secondary=place_amenity,
         viewonly=False,
-        backref='place_amenities'
+        # backref='place_amenities'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
 
     @property
