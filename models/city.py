@@ -17,10 +17,10 @@ class City(BaseModel, Base):
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     state = relationship(
-        'State', back_populates='cities'
+        'State', backref='states.id'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     places = relationship(
         'Place',
         cascade='all, delete, delete-orphan',
-        back_populates="cities"
+        backred='places.id'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
