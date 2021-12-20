@@ -75,8 +75,7 @@ class Place(BaseModel, Base):
     amenities = relationship(
         'Amenity',
         secondary=place_amenity,
-        viewonly=False,
-        backref='place_amenities'
+        viewonly=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
 
     @property
@@ -89,19 +88,20 @@ class Place(BaseModel, Base):
                 reviews_of_place.append(value)
         return reviews_of_place
 
-    @property
-    def amenities(self):
-        """Returns the amenities of this Place"""
-        from models import storage
-        amenities_of_place = []
-        for value in storage.all(Amenity).values():
-            if value.id in self.amenity_ids:
-                amenities_of_place.append(value)
-        return amenities_of_place
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def amenities(self):
+            """Returns the amenities of this Place"""
+            from models import storage
+            amenities_of_place = []
+            for value in storage.all(Amenity).values():
+                if value.id in self.amenity_ids:
+                    amenities_of_place.append(value)
+            return amenities_of_place
 
-    @amenities.setter
-    def amenities(self, value):
-        """Adds an amenity to this Place"""
-        if type(value) is Amenity:
-            if value.id not in self.amenity_ids:
-                self.amenity_ids.append(value.id)
+        @amenities.setter
+        def amenities(self, value):
+            """Adds an amenity to this Place"""
+            if type(value) is Amenity:
+                if value.id not in self.amenity_ids:
+                    self.amenity_ids.append(value.id)
