@@ -25,10 +25,10 @@ class User(BaseModel, Base):
     places = relationship(
         'Place',
         cascade="all, delete, delete-orphan",
-        back_populates='user'
+        backref='users.id'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     reviews = relationship(
         'Review',
         cascade="all, delete, delete-orphan",
-        back_populates='user'
+        backref='users.id'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
