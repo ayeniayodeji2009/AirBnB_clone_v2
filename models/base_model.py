@@ -11,14 +11,13 @@ Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
-    id = Column(String(60), nullable=False, primary_key=True)
+    id = Column(String(60), nullable=False, primary_key=True, unique=True)
     created_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
     created_at = Column(DATETIME, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model"""
+        """Instantiates a new model"""
         if not kwargs:
-            # from models import storage
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
@@ -51,11 +50,10 @@ class BaseModel:
         """Convert instance into dict format"""
         res = {}
         for key, value in self.__dict__.items():
-            if isinstance(value, datetime):
-                res[key] = value.isoformat()
-            else:
-                res[key] = value
+            if key != '_sa_instance_state':
+                if isinstance(value, datetime):
+                    res[key] = value.isoformat()
+                else:
+                    res[key] = value
         res['__class__'] = self.__class__.__name__
-        if '_sa_instance_state' in res.keys():
-            del res['_sa_instance_state']
         return res
