@@ -74,7 +74,7 @@ class Place(BaseModel, Base):
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     amenities = relationship(
         'Amenity',
-        secondary=place_amenity,
+        secondary='place_amenity',
         viewonly=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
 
@@ -99,7 +99,6 @@ class Place(BaseModel, Base):
                     amenities_of_place.append(value)
             return amenities_of_place
 
-    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
         @amenities.setter
         def amenities(self, value):
             """Adds an amenity to this Place"""
