@@ -65,18 +65,11 @@ class Place(BaseModel, Base):
         Float, nullable=True
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else 0.0
     amenity_ids = []
-    # user = relationship(
-    #     'User',
-    #     backref='places.id'
-    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
-    # cities = relationship(
-    #     'City', backref='places.id'
-    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
-    # reviews = relationship(
-    #     'Review',
-    #     cascade="all, delete, delete-orphan",
-    #     backref='places.id'
-    # ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
+    reviews = relationship(
+        'Review',
+        cascade="all, delete, delete-orphan",
+        backref='place'
+    ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     # amenities = relationship(
     #     'Amenity',
     #     secondary=place_amenity,
