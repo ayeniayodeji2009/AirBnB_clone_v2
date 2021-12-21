@@ -2,11 +2,11 @@
 """ """
 import os
 
-from tests.test_models.test_base_model import TestBasemodel
+from tests.test_models.test_base_model import test_basemodel
 from models.review import Review
 
 
-class TestReview(TestBasemodel):
+class test_review(test_basemodel):
     """Represents the tests for the Review model."""
     def __init__(self, *args, **kwargs):
         """Initializes the test class."""

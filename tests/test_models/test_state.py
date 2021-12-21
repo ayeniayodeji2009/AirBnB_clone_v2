@@ -2,11 +2,11 @@
 """ """
 import os
 
-from tests.test_models.test_base_model import TestBasemodel
+from tests.test_models.test_base_model import test_basemodel
 from models.state import State
 
 
-class TestState(TestBasemodel):
+class test_state(test_basemodel):
     """Represents the tests for the State model."""
     def __init__(self, *args, **kwargs):
         """Initializes the test class."""
