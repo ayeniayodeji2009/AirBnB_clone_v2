@@ -309,7 +309,7 @@ class TestHBNBCommand(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as cout:
             cons = HBNBCommand()
             # creating a model with non-null attribute(s)
-            with self.assertRaises(sqlalchemy.exc.SQLAlchemyError):
+            with self.assertRaises(sqlalchemy.exc.OperationalError):
                 cons.onecmd('create User')
             # creating a User instance
             clear_stream(cout)
