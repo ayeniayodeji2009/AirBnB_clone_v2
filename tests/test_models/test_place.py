@@ -2,11 +2,11 @@
 """ """
 import os
 
-from tests.test_models.test_base_model import test_basemodel
+from tests.test_models.test_base_model import TestBasemodel
 from models.place import Place
 
 
-class test_Place(test_basemodel):
+class TestPlace(TestBasemodel):
     """Represents the tests for the Place model."""
     def __init__(self, *args, **kwargs):
         """Initializes the test class."""
