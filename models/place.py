@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 import os
-from sqlalchemy import Column, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.schema import Table
 
 from models.base_model import BaseModel, Base
 from models.review import Review
@@ -77,7 +76,6 @@ class Place(BaseModel, Base):
             'Amenity',
             secondary=place_amenity,
             viewonly=False,
-            back_populates='place_amenities'
         )
     else:
         @property
