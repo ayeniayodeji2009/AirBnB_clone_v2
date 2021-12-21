@@ -74,11 +74,10 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
                     contains all Amenity.id linked to the Place
                 '''
                 from models import storage
-                all_amens = storage.all(Amenity)
                 lst = []
-                for amen in all_amens.values():
-                    if amen.id in self.amenity_ids:
-                        lst.append(amen)
+                for value in storage.all(Amenity).values():
+                    if value.id in self.amenity_ids:
+                        lst.append(value)
                 return lst
 
             @amenities.setter
@@ -87,6 +86,6 @@ if os.getenv('HBNB_TYPE_STORAGE') == 'db':
                     attribute amenity_ids. accepts only Amenity
                     objects
                 '''
-                if obj is not None:
-                    if isinstance(obj, Amenity):
+                if type(obj) is Amenity:
+                    if obj.id not in self.amenity_ids:
                         self.amenity_ids.append(obj.id)
