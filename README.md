@@ -1,6 +1,6 @@
 # AirBnB Clone (HBNB)
 
-[![CodeStyle](https://github.com/B3zaleel/AirBnB_clone/actions/workflows/codestyle.yml/badge.svg)](https://github.com/B3zaleel/AirBnB_clone_v2/actions/workflows/codestyle.yml)
+[![CodeStyle](https://github.com/B3zaleel/AirBnB_clone_v2/actions/workflows/codestyle.yml/badge.svg)](https://github.com/B3zaleel/AirBnB_clone_v2/actions/workflows/codestyle.yml)
 ![Latest commit](https://img.shields.io/github/last-commit/B3zaleel/AirBnB_clone_v2/master?style=round-square)
 
 ## Description
