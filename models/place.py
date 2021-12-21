@@ -97,12 +97,12 @@ class Place(BaseModel, Base):
                 if value.id not in self.amenity_ids:
                     self.amenity_ids.append(value.id)
 
-    @property
-    def reviews(self):
-        """Returns the reviews of this Place"""
-        from models import storage
-        reviews_of_place = []
-        for value in storage.all(Review).values():
-            if value.place_id == self.id:
-                reviews_of_place.append(value)
-        return reviews_of_place
+        @property
+        def reviews(self):
+            """Returns the reviews of this Place"""
+            from models import storage
+            reviews_of_place = []
+            for value in storage.all(Review).values():
+                if value.place_id == self.id:
+                    reviews_of_place.append(value)
+            return reviews_of_place
