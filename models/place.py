@@ -88,16 +88,16 @@ class Place(BaseModel, Base):
                 reviews_of_place.append(value)
         return reviews_of_place
 
-    # if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-    @property
-    def amenities(self):
-        """Returns the amenities of this Place"""
-        from models import storage
-        amenities_of_place = []
-        for value in storage.all(Amenity).values():
-            if value.id in self.amenity_ids:
-                amenities_of_place.append(value)
-        return amenities_of_place
+    if os.getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def amenities(self):
+            """Returns the amenities of this Place"""
+            from models import storage
+            amenities_of_place = []
+            for value in storage.all(Amenity).values():
+                if value.id in self.amenity_ids:
+                    amenities_of_place.append(value)
+            return amenities_of_place
 
     @amenities.setter
     def amenities(self, value):
