@@ -9,8 +9,6 @@ from uuid import UUID
 from models.base_model import BaseModel
 
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 'basemodel test not supported')
 class TestBasemodel(unittest.TestCase):
     """Represents the tests for the BaseModel."""
 
