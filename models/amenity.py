@@ -15,4 +15,5 @@ class Amenity(BaseModel, Base):
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     place_amenities = relationship(
         'Place',
+        secondary='place_amenity',
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
