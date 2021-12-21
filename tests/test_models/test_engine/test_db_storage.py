@@ -122,6 +122,8 @@ class TestDBStorage(unittest.TestCase):
         cursor = dbc.cursor()
         cursor.execute('SELECT * FROM users WHERE id="{}"'.format(new.id))
         result = cursor.fetchone()
+        cursor.execute('SELECT COUNT(*) FROM users;')
+        old_cnt = cursor.fetchone()[0]
         self.assertTrue(result is None)
         self.assertFalse(new in storage.all().values())
         new.save()
@@ -135,7 +137,10 @@ class TestDBStorage(unittest.TestCase):
         cursor1 = dbc1.cursor()
         cursor1.execute('SELECT * FROM users WHERE id="{}"'.format(new.id))
         result = cursor1.fetchone()
+        cursor1.execute('SELECT COUNT(*) FROM users;')
+        new_cnt = cursor1.fetchone()[0]
         self.assertFalse(result is None)
+        self.assertEqual(old_cnt + 1, new_cnt)
         self.assertTrue(new in storage.all().values())
         cursor1.close()
         dbc1.close()
