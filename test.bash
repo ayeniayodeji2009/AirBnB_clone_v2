@@ -13,9 +13,9 @@ env HBNB_MYSQL_USER="" \
     HBNB_ENV="test" \
     HBNB_TYPE_STORAGE="file" \
     HBNB_MYSQL_PWD="" \
-    'python3' '-m' 'unittest' 'discover' 'tests'
-echo -e "\e[0m\e[104m Running Unit Tests [DBStorage] \e[0m\e[33m"
-env HBNB_MYSQL_USER="hbnb_test" \
+    'python3' '-m' 'unittest' 'discover' 'tests' \
+&& echo -e "\e[0m\e[104m Running Unit Tests [DBStorage] \e[0m\e[33m" \
+&& env HBNB_MYSQL_USER="hbnb_test" \
     HBNB_MYSQL_HOST="localhost" \
     HBNB_MYSQL_DB="hbnb_test_db" \
     HBNB_ENV="test" \
