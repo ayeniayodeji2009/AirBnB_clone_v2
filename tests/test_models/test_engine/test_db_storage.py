@@ -5,7 +5,7 @@ import os
 import unittest
 from datetime import datetime
 
-from models import storage, DBStorage
+from models import storage
 from models.user import User
 
 
@@ -146,3 +146,8 @@ class TestDBStorage(unittest.TestCase):
         dbc1.close()
         cursor.close()
         dbc.close()
+
+    def test_storage_var_created(self):
+        """ DBStorage object storage created """
+        from models.engine.db_storage import DBStorage
+        self.assertEqual(type(storage), DBStorage)

@@ -48,15 +48,16 @@ class TestBasemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
 
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_save(self):
         """Tests the save function of the BaseModel class."""
         i = self.value()
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            i.save()
-            key = self.name + "." + i.id
-            with open('file.json', 'r') as f:
-                j = json.load(f)
-                self.assertEqual(j[key], i.to_dict())
+        i.save()
+        key = self.name + "." + i.id
+        with open('file.json', 'r') as f:
+            j = json.load(f)
+            self.assertEqual(j[key], i.to_dict())
 
     def test_str(self):
         """Tests the __str__ function of the BaseModel class."""
