@@ -20,7 +20,6 @@ from tests import clear_stream
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
-
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_console_v_0_0_1(self):
