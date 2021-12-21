@@ -18,6 +18,7 @@ place_amenity = Table('place_amenity', Base.metadata,
                              primary_key=True,
                              nullable=False)
                       )
+"""The association table for Place and Amenity"""
 
 
 class Place(BaseModel, Base):
