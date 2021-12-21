@@ -4,11 +4,10 @@
 import json
 import MySQLdb
 import os
+import sqlalchemy
 import unittest
 from io import StringIO
 from unittest.mock import patch
-
-import sqlalchemy
 
 from console import HBNBCommand
 from models import storage
@@ -311,7 +310,7 @@ class TestHBNBCommand(unittest.TestCase):
             # creating a model with non-null attribute(s)
             with self.assertRaises(sqlalchemy.exc.SQLAlchemyError):
                 cons.onecmd('create User')
-            # showing a User instance
+            # creating a User instance
             clear_stream(cout)
             cons.onecmd('create User email="john25@gmail.com" password="123"')
             mdl_id = cout.getvalue().strip()
