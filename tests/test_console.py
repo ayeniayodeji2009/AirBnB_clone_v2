@@ -17,11 +17,11 @@ from models.state import State
 from tests import clear_stream
 
 
+@unittest.skipIf(
+    os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
 class TestHBNBCommand(unittest.TestCase):
     """Represents the test class for the HBNBCommand class.
     """
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_console_v_0_0_1(self):
         """Tests the features of version 0.0.1 of the console.
         """
@@ -52,8 +52,6 @@ class TestHBNBCommand(unittest.TestCase):
                 cons.onecmd('quit')
             self.assertEqual(ex.exception.code, 0)
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_console_v_0_1(self):
         """Tests the features of version 0.1 of the console.
         """
@@ -153,8 +151,6 @@ class TestHBNBCommand(unittest.TestCase):
             )
         # endregion
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_user(self):
         """Tests the show, create, destroy, update, and all
         commands with a User model.
@@ -190,8 +186,6 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd('show User {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), '** no instance found **\n')
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_all(self):
         """Tests the ClassName.all() feature.
         """
@@ -205,8 +199,6 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_count(self):
         """Tests the ClassName.count() feature.
         """
@@ -225,8 +217,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(cout.getvalue(), "2\n")
             self.assertTrue(int(cout.getvalue()) >= 0)
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_show(self):
         """Tests the ClassName.show(id) feature.
         """
@@ -240,47 +230,41 @@ class TestHBNBCommand(unittest.TestCase):
             cons.onecmd(cmd_line)
             self.assertIn(mdl_id, cout.getvalue())
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_destroy(self):
         """Tests the ClassName.destroy(id) feature.
         """
         with patch('sys.stdout', new=StringIO()) as cout:
             cons = HBNBCommand()
             # create a sample object and destroy it
-            cons.onecmd('create City')
+            cons.onecmd('create State name="Lagos"')
             mdl_id = cout.getvalue().strip()
             clear_stream(cout)
-            cmd_line = cons.precmd('City.destroy({})'.format(mdl_id))
+            cmd_line = cons.precmd('State.destroy({})'.format(mdl_id))
             cons.onecmd(cmd_line)
             clear_stream(cout)
-            cons.onecmd('show City {}'.format(mdl_id))
+            cons.onecmd('show State {}'.format(mdl_id))
             self.assertEqual(cout.getvalue(), "** no instance found **\n")
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_update_0(self):
         """Tests the ClassName.update(id, attr_name, attr_value) feature.
         """
         with patch('sys.stdout', new=StringIO()) as cout:
             cons = HBNBCommand()
             # create a sample object and update it
-            cons.onecmd('create Place')
+            cons.onecmd('create State name="Lagos"')
             mdl_id = cout.getvalue().strip()
             clear_stream(cout)
             cmd_line = cons.precmd(
-                'Place.update({}, '.format(mdl_id) +
-                'name, "Rio de Janeiro")'
+                'State.update({}, '.format(mdl_id) +
+                'name, "California")'
             )
             cons.onecmd(cmd_line)
-            cons.onecmd('show Place {}'.format(mdl_id))
+            cons.onecmd('show State {}'.format(mdl_id))
             self.assertIn(
-                "'name': 'Rio de Janeiro'",
+                "'name': 'California'",
                 cout.getvalue()
             )
 
-    @unittest.skipIf(
-        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
     def test_class_update_1(self):
         """Tests the ClassName.update(id, dict_repr) feature.
         """

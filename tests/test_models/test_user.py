@@ -18,23 +18,31 @@ class TestUser(TestBasemodel):
     def test_first_name(self):
         """Tests the type of first_name."""
         new = self.value()
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            self.assertEqual(type(new.first_name), str)
+        self.assertEqual(
+            type(new.first_name),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
 
     def test_last_name(self):
         """Tests the type of last_name."""
         new = self.value()
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            self.assertEqual(type(new.last_name), str)
+        self.assertEqual(
+            type(new.last_name),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
 
     def test_email(self):
         """Tests the type of email."""
         new = self.value()
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            self.assertEqual(type(new.email), str)
+        self.assertEqual(
+            type(new.email),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
 
     def test_password(self):
         """Tests the type of password."""
         new = self.value()
-        if os.getenv('HBNB_TYPE_STORAGE') != 'db':
-            self.assertEqual(type(new.password), str)
+        self.assertEqual(
+            type(new.password),
+            str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
+        )
