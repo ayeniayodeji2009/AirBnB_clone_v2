@@ -105,8 +105,8 @@ class TestBasemodel(unittest.TestCase):
 
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
-    def test_save(self):
-        """Tests the save function of the BaseModel class."""
+    def test_delete(self):
+        """Tests the delete function of the BaseModel class."""
         from models import storage
         i = self.value()
         i.save()
