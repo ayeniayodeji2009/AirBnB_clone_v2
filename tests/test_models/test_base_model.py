@@ -102,3 +102,14 @@ class TestBasemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+    @unittest.skipIf(
+        os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')
+    def test_save(self):
+        """Tests the save function of the BaseModel class."""
+        from models import storage
+        i = self.value()
+        i.save()
+        self.assertTrue(i in storage.all().values())
+        i.delete()
+        self.assertFalse(i in storage.all().values())
