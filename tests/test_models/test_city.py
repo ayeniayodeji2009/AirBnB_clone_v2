@@ -2,8 +2,8 @@
 """ """
 import os
 
-from tests.test_models.test_base_model import TestBasemodel
 from models.city import City
+from tests.test_models.test_base_model import TestBasemodel
 
 
 class TestCity(TestBasemodel):
