@@ -41,6 +41,7 @@ HOME_PAGE=\
 </html>
 "
 
+apt-get -y upgrade
 apt update
 apt-get update
 apt-get -y install nginx
