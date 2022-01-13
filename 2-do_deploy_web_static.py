@@ -11,6 +11,7 @@ fabric_api.env.user = "ubuntu"
 """The username of the host servers."""
 
 
+@fabric_api.runs_once
 def do_pack():
     """Archives the static files."""
     if not os.path.isdir("versions"):
