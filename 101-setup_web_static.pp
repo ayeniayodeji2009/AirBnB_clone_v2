@@ -51,6 +51,7 @@ file { '/data/web_static/releases/test/index.html':
 	<body>
 </html>
 ",
+  replace => true,
   require => [
     File['/data/web_static/releases/test'],
     File['/data/web_static/shared'],
