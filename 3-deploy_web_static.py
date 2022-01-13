@@ -1,17 +1,15 @@
 #!/usr/bin/python3
 """A module for web application deployment with Fabric."""
-import fabric.api as fabric_api
 import os
 from datetime import datetime
+from fabric.api import env, local, put, run, runs_once
 
 
-fabric_api.env.hosts = ["34.73.0.174", "34.75.208.81"]
+env.hosts = ["34.73.0.174", "34.75.208.81"]
 """The list of host server IP addresses."""
-fabric_api.env.user = "ubuntu"
-"""The username of the host servers."""
 
 
-@fabric_api.runs_once
+@runs_once
 def do_pack():
     """Archives the static files."""
     if not os.path.isdir("versions"):
@@ -27,7 +25,7 @@ def do_pack():
     )
     try:
         print("Packing web_static to {}".format(output))
-        fabric_api.local("tar -cvzf {} web_static".format(output))
+        local("tar -cvzf {} web_static".format(output))
         archize_size = os.stat(output).st_size
         print("web_static packed: {} -> {} Bytes".format(output, archize_size))
     except Exception:
@@ -47,20 +45,15 @@ def do_deploy(archive_path):
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
     success = False
     try:
-        fabric_api.put(archive_path, "/tmp/{}".format(file_name))
-        fabric_api.run("mkdir -p {}".format(folder_path))
-        fabric_api.run(
-            "tar -xzf /tmp/{} -C {}".format(file_name, folder_path)
-        )
-        fabric_api.run("rm /tmp/{}".format(file_name))
-        fabric_api.run(
-            "mv {}web_static/* {}".format(folder_path, folder_path)
-        )
-        fabric_api.run("rm -rf {}web_static".format(folder_path))
-        fabric_api.run("rm -rf /data/web_static/current")
-        fabric_api.run(
-            "ln -sf {} /data/web_static/current".format(folder_path)
-        )
+        put(archive_path, "/tmp/{}".format(file_name))
+        run("mkdir -p {}".format(folder_path))
+        run("tar -xzf /tmp/{} -C {}".format(file_name, folder_path))
+        run("rm -rf /tmp/{}".format(file_name))
+        run("mv {}web_static/* {}".format(folder_path, folder_path))
+        run("rm -rf {}web_static".format(folder_path))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(folder_path))
+        print('New version deployed!')
         success = True
     except Exception:
         success = False
