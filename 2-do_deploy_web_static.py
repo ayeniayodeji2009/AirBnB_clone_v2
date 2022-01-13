@@ -61,6 +61,7 @@ def do_deploy(archive_path):
         fabric_api.run(
             "ln -sf {} /data/web_static/current".format(folder_path)
         )
+        print('New version deployed!')
         success = True
     except Exception:
         success = False
