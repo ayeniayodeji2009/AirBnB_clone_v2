@@ -20,13 +20,13 @@ file { '/var/www':
 }
 
 file { '/var/www/html/index.html':
-  ensure  => file,
+  ensure  => present,
   content => 'Holberton School for the win!',
   require => File['/var/www'],
 }
 
 file { '/var/www/error/404.html':
-  ensure  => file,
+  ensure  => present,
   content => "Ceci n'est pas une page",
   require => File['/var/www'],
 }
@@ -42,7 +42,7 @@ file { '/data/web_static/shared':
 }
 
 file { '/data/web_static/releases/test/index.html':
-  ensure  => file,
+  ensure  => present,
   content =>
 "<!DOCTYPE html>
 <html lang='en-US'>
@@ -75,7 +75,7 @@ exec { 'change-data-owner':
 }
 
 file { '/etc/nginx/sites-available/airbnbclone':
-  ensure  => file,
+  ensure  => present,
   mode    => '0644',
   content =>
 "server {
