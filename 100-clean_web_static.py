@@ -82,7 +82,7 @@ def do_clean(number=0):
     for archive in archives:
         os.unlink('versions/{}'.format(archive))
     cmd_parts = [
-        "rm -Rf $(",
+        "rm -rf $(",
         "find /data/web_static/releases/ -maxdepth 1 -type d -iregex",
         " '/data/web_static/releases/web_static_.*'",
         " | sort -r | tr '\\n' ' ' | cut -d ' ' -f{}-)".format(start + 1)
