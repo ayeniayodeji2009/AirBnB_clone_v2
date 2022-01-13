@@ -75,6 +75,8 @@ def do_clean(number=0):
     archives = os.listdir('versions/')
     archives.sort(reverse=True)
     start = int(number)
+    if not start:
+        start += 1
     if start < len(archives):
         archives = archives[start:]
     else:
