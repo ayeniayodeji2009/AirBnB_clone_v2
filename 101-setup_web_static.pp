@@ -15,6 +15,7 @@ file { '/var/www':
   owner   => 'www-data',
   group   => 'www-data',
   mode    => '0755',
+  recurse => true,
   require => Package['nginx'],
 }
 
@@ -34,13 +35,6 @@ exec { 'make-static-files-folder':
   require => Package['nginx'],
 }
 
-file { '/data':
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  require => File['/data/web_static/current'],
-}
-
 file { '/data/web_static/releases/test/index.html':
   content =>
 "<!DOCTYPE html>
@@ -54,10 +48,7 @@ file { '/data/web_static/releases/test/index.html':
 </html>
 ",
   replace => true,
-  require => [
-    Exec['make-static-files-folder'],
-    File['/data'],
-  ],
+  require => Exec['make-static-files-folder'],
 }
 
 file { '/data/web_static/current':
@@ -67,9 +58,16 @@ file { '/data/web_static/current':
   require => File['/data/web_static/releases/test/index.html'],
 }
 
+exec { 'change-data-owner':
+  command => 'chown -hR ubuntu:ubuntu /data',
+  path    => '/usr/bin:/usr/sbin:/bin',
+  require => File['/data/web_static/current'],
+}
+
 file { '/etc/nginx/sites-available/airbnbclone':
   ensure  => file,
   mode    => '0644',
+  owner   => 'www-data',
   content =>
 "server {
 	listen 80 default_server;
@@ -103,11 +101,11 @@ file { '/etc/nginx/sites-available/airbnbclone':
     Package['nginx'],
     File['/var/www/html/index.html'],
     File['/var/www/error/404.html'],
-    File['/data'],
+    Exec['change-data-owner']
   ],
 }
 
-file { '/etc/nginx/sites-enabled/airbnbclone':
+file { '/etc/nginx/sites-enabled/default':
   ensure  => link,
   target  => '/etc/nginx/sites-available/airbnbclone',
   replace => true,
@@ -118,7 +116,6 @@ service { 'nginx':
   ensure     => running,
   hasrestart => true,
   require    => [
-    File['/etc/nginx/sites-enabled/airbnbclone'],
-    Package['nginx'],
+    File['/etc/nginx/sites-enabled/default']
   ],
 }
