@@ -6,31 +6,9 @@ from datetime import datetime
 
 
 fabric_api.env.hosts = ["34.73.0.174", "34.75.208.81"]
+"""The list of host server IP addresses."""
 fabric_api.env.user = "ubuntu"
-
-
-@fabric_api.runs_once
-def do_pack():
-    """Archives the static files."""
-    if not os.path.isdir("versions"):
-        os.mkdir("versions")
-    cur_time = datetime.now()
-    output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-        cur_time.year,
-        cur_time.month,
-        cur_time.day,
-        cur_time.hour,
-        cur_time.minute,
-        cur_time.second
-    )
-    try:
-        print("Packing web_static to {}".format(output))
-        fabric_api.local("tar -cvzf {} web_static".format(output))
-        archize_size = os.stat(output).st_size
-        print("web_static packed: {} -> {} Bytes".format(output, archize_size))
-    except Exception:
-        output = None
-    return output
+"""The username of the host servers."""
 
 
 def do_deploy(archive_path):
@@ -59,7 +37,6 @@ def do_deploy(archive_path):
         fabric_api.run(
             "ln -s {} /data/web_static/current".format(folder_path)
         )
-        print('New version deployed!')
         success = True
     except Exception:
         success = False
