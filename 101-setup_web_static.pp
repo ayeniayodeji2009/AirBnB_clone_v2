@@ -12,8 +12,6 @@ package { 'nginx':
 
 file { '/var/www':
   ensure  => directory,
-  owner   => 'www-data',
-  group   => 'www-data',
   mode    => '0755',
   recurse => true,
   require => Package['nginx'],
@@ -75,7 +73,6 @@ exec { 'change-data-owner':
 file { '/etc/nginx/sites-available/airbnbclone':
   ensure  => file,
   mode    => '0644',
-  owner   => 'www-data',
   content =>
 "server {
 	listen 80 default_server;
