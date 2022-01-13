@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """A module for web application deployment with Fabric."""
-import fabric.api as fabric_api
 import os
 from datetime import datetime
+from fabric.api import local, runs_once
 
 
-@fabric_api.runs_once
+@runs_once
 def do_pack():
     """Archives the static files."""
     if not os.path.isdir("versions"):
@@ -21,7 +21,7 @@ def do_pack():
     )
     try:
         print("Packing web_static to {}".format(output))
-        fabric_api.local("tar -cvzf {} web_static".format(output))
+        local("tar -cvzf {} web_static".format(output))
         archize_size = os.stat(output).st_size
         print("web_static packed: {} -> {} Bytes".format(output, archize_size))
     except Exception:
