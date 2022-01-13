@@ -57,9 +57,9 @@ def do_deploy(archive_path):
             "mv {}web_static/* {}".format(folder_path, folder_path)
         )
         fabric_api.run("rm -rf {}web_static".format(folder_path))
-        # fabric_api.run("rm -rf /data/web_static/current")
+        fabric_api.run("rm -rf /data/web_static/current")
         fabric_api.run(
-            "ln -sf {} /data/web_static/current".format(folder_path)
+            "ln -s {} /data/web_static/current".format(folder_path)
         )
         print('New version deployed!')
         success = True
