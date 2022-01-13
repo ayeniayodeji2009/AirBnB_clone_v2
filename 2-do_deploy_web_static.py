@@ -2,13 +2,10 @@
 """A module for web application deployment with Fabric."""
 import fabric.api as fabric_api
 import os
-from datetime import datetime
 
 
 fabric_api.env.hosts = ["34.73.0.174", "34.75.208.81"]
 """The list of host server IP addresses."""
-fabric_api.env.user = "ubuntu"
-"""The username of the host servers."""
 
 
 def do_deploy(archive_path):
