@@ -20,22 +20,29 @@ file { '/var/www':
 }
 
 file { '/var/www/html/index.html':
+  ensure  => file,
   content => 'Holberton School for the win!',
   require => File['/var/www'],
 }
 
 file { '/var/www/error/404.html':
+  ensure  => file,
   content => "Ceci n'est pas une page",
   require => File['/var/www'],
 }
 
-exec { 'make-static-files-folder':
-  command => 'mkdir -p /data/web_static/releases/test /data/web_static/shared',
-  path    => '/usr/bin:/usr/sbin:/bin',
+file { '/data/web_static/releases/test':
+  ensure  => directory,
+  require => Package['nginx'],
+}
+
+file { '/data/web_static/shared':
+  ensure  => directory,
   require => Package['nginx'],
 }
 
 file { '/data/web_static/releases/test/index.html':
+  ensure  => file,
   content =>
 "<!DOCTYPE html>
 <html lang='en-US'>
@@ -48,7 +55,10 @@ file { '/data/web_static/releases/test/index.html':
 </html>
 ",
   replace => true,
-  require => Exec['make-static-files-folder'],
+  require => [
+    File['/data/web_static/releases/test'],
+    File['/data/web_static/shared'],
+  ],
 }
 
 file { '/data/web_static/current':
@@ -67,7 +77,6 @@ exec { 'change-data-owner':
 file { '/etc/nginx/sites-available/airbnbclone':
   ensure  => file,
   mode    => '0644',
-  owner   => 'www-data',
   content =>
 "server {
 	listen 80 default_server;
@@ -101,11 +110,11 @@ file { '/etc/nginx/sites-available/airbnbclone':
     Package['nginx'],
     File['/var/www/html/index.html'],
     File['/var/www/error/404.html'],
-    Exec['change-data-owner']
+    Exec['change-data-owner'],
   ],
 }
 
-file { '/etc/nginx/sites-enabled/default':
+file { '/etc/nginx/sites-enabled/airbnbclone':
   ensure  => link,
   target  => '/etc/nginx/sites-available/airbnbclone',
   replace => true,
@@ -115,7 +124,8 @@ file { '/etc/nginx/sites-enabled/default':
 service { 'nginx':
   ensure     => running,
   hasrestart => true,
-  require    => [
-    File['/etc/nginx/sites-enabled/default']
+  subscribe  => [
+    File['/etc/nginx/sites-enabled/airbnbclone'],
+    Package['nginx'],
   ],
 }
