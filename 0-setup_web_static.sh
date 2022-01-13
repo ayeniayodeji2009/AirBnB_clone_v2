@@ -53,10 +53,11 @@ echo -e "Ceci n\x27est pas une page" > /var/www/error/404.html
 
 mkdir -p /data/web_static/releases/test /data/web_static/shared
 echo -e "$HOME_PAGE" > /data/web_static/releases/test/index.html
+rm -f /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -hR ubuntu:ubuntu /data
 bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-available/airbnbclone"
-ln -sf '/etc/nginx/sites-available/airbnbclone' '/etc/nginx/sites-enabled/default'
+ln -sf '/etc/nginx/sites-available/airbnbclone' '/etc/nginx/sites-enabled/airbnbclone'
 if [ "$(pgrep -c nginx)" -le 0 ]; then
 	service nginx start
 else
