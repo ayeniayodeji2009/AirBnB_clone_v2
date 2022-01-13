@@ -41,8 +41,10 @@ HOME_PAGE=\
 </html>
 "
 
+apt update
 apt-get update
 apt-get -y install nginx
+ufw allow 'Nginx HTTP'
 mkdir -p /var/www/html /var/www/error
 chmod -R 755 /var/www
 echo 'Hello World!' > /var/www/html/index.html
@@ -50,6 +52,7 @@ echo -e "Ceci n\x27est pas une page" > /var/www/error/404.html
 
 mkdir -p /data/web_static/releases/test /data/web_static/shared
 echo -e "$HOME_PAGE" > /data/web_static/releases/test/index.html
+[ -d /data/web_static/current ] && rm -rf /data/web_static/current
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -hR ubuntu:ubuntu /data
 bash -c "echo -e '$SERVER_CONFIG' > /etc/nginx/sites-available/airbnbclone"
