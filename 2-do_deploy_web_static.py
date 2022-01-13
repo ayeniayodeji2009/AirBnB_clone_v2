@@ -6,9 +6,7 @@ from datetime import datetime
 
 
 fabric_api.env.hosts = ["34.73.0.174", "34.75.208.81"]
-"""The list of host server IP addresses."""
 fabric_api.env.user = "ubuntu"
-"""The username of the host servers."""
 
 
 @fabric_api.runs_once
