@@ -1,13 +1,15 @@
 #!/usr/bin/puppet apply
 # AirBnB clone web server setup and configuration
 exec { 'apt-get-update':
-  command => '/usr/bin/apt-get update',
+  command => 'apt-get update',
   path    => '/usr/bin:/usr/sbin:/bin',
 }
 
 package { 'nginx':
-  ensure  => installed,
-  require => Exec['apt-get-update'],
+  ensure          => installed,
+  provider        => 'apt',
+  install_options => ['-y'],
+  require         => Exec['apt-get-update'],
 }
 
 file { '/var/www':
@@ -18,7 +20,7 @@ file { '/var/www':
 }
 
 file { '/var/www/html/index.html':
-  content => 'Hello, World!',
+  content => 'Holberton School for the win!',
   require => File['/var/www'],
 }
 
