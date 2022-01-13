@@ -20,7 +20,7 @@ def do_deploy(archive_path):
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
     success = False
     try:
-        fabric_api.put(archive_path, "/tmp/{}".format(file_name))
+        fabric_api.put(archive_path, "/tmp/")
         fabric_api.run("mkdir -p {}".format(folder_path))
         fabric_api.run(
             "tar -xzf /tmp/{} -C {}".format(file_name, folder_path)
