@@ -41,11 +41,8 @@ HOME_PAGE=\
 </html>
 "
 
-# shellcheck disable=SC2230
-if [[ "$(which nginx | grep -c nginx)" == '0' ]]; then
-    apt-get update
-    apt-get -y install nginx
-fi
+apt-get update
+apt-get -y install nginx
 mkdir -p /var/www/html /var/www/error
 chmod -R 755 /var/www
 echo 'Hello World!' > /var/www/html/index.html
