@@ -105,7 +105,7 @@ file { '/etc/nginx/sites-available/airbnbclone':
   ],
 }
 
-file { '/etc/nginx/sites-enabled/default':
+file { '/etc/nginx/sites-enabled/airbnbclone':
   ensure  => link,
   target  => '/etc/nginx/sites-available/airbnbclone',
   replace => true,
@@ -113,9 +113,10 @@ file { '/etc/nginx/sites-enabled/default':
 }
 
 service { 'nginx':
-  ensure     => running,
-  hasrestart => true,
-  require    => [
-    File['/etc/nginx/sites-enabled/default']
+  ensure  => running,
+  require => [
+    File['/etc/nginx/sites-enabled/airbnbclone'],
+    Package['nginx'],
+    File['/data/web_static/releases/test/index.html'],
   ],
 }
