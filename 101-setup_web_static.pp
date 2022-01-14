@@ -65,7 +65,7 @@ file { '/data/web_static/current':
 }
 
 exec { 'change-data-owner':
-  command => 'bash -c "chown -hR ubuntu:ubuntu /data; echo"',
+  command => 'chown -hR ubuntu:ubuntu /data',
   path    => '/usr/bin:/usr/sbin:/bin',
   require => File['/data/web_static/current'],
 }
