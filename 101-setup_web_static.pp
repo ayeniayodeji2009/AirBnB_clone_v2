@@ -71,7 +71,7 @@ exec { 'change-data-owner':
 }
 
 file { '/etc/nginx/sites-available/airbnbclone':
-  ensure  => file,
+  ensure  => present,
   mode    => '0644',
   content =>
 "server {
@@ -85,7 +85,7 @@ file { '/etc/nginx/sites-available/airbnbclone':
 		root /var/www/html/;
 		try_files \$uri \$uri/ =404;
 	}
-	location /hbnb_static {
+	location /hbnb_static/ {
 		alias /data/web_static/current/;
 		try_files \$uri \$uri/ =404;
 	}
