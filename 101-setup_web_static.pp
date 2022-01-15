@@ -70,7 +70,7 @@ exec { 'change-data-owner':
   require => File['/data/web_static/current'],
 }
 
-file { '/etc/nginx/sites-available/airbnbclone':
+file { '/etc/nginx/sites-available/default':
   ensure  => present,
   mode    => '0644',
   content =>
@@ -112,11 +112,18 @@ file { '/etc/nginx/sites-enabled/default':
   require => File['/etc/nginx/sites-available/default'],
 }
 
+exec { 'enable-site':
+  command => "ln -sf '/etc/nginx/sites-available/default' '/etc/nginx/sites-enabled/default'",
+  path    => '/usr/bin:/usr/sbin:/bin',
+  require => File['/etc/nginx/sites-available/default'],
+}
+
 exec { 'start-nginx':
   command => 'sudo service nginx restart',
   path    => '/usr/bin:/usr/sbin:/bin',
   require => [
     File['/etc/nginx/sites-enabled/default'],
+    Exec['enable-site'],
     Package['nginx'],
     File['/data/web_static/releases/test/index.html'],
   ],
