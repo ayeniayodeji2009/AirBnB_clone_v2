@@ -54,10 +54,9 @@ file { '/data/web_static/releases/test/index.html':
   require => Exec['make-static-files-folder'],
 }
 
-file { '/data/web_static/current':
-  ensure  => link,
-  target  => '/data/web_static/releases/test/',
-  replace => true,
+exec { 'link-static-files':
+  command => 'ln -sf /data/web_static/releases/test/ /data/web_static/current',
+  path    => '/usr/bin:/usr/sbin:/bin',
   require => [
     Exec['remove-current'],
     File['/data/web_static/releases/test/index.html'],
@@ -67,7 +66,7 @@ file { '/data/web_static/current':
 exec { 'change-data-owner':
   command => 'chown -hR ubuntu:ubuntu /data',
   path    => '/usr/bin:/usr/sbin:/bin',
-  require => File['/data/web_static/current'],
+  require => Exec['link-static-files'],
 }
 
 file { '/etc/nginx/sites-available/default':
@@ -105,13 +104,6 @@ file { '/etc/nginx/sites-available/default':
   ],
 }
 
-file { '/etc/nginx/sites-enabled/default':
-  ensure  => link,
-  target  => '/etc/nginx/sites-available/default',
-  replace => true,
-  require => File['/etc/nginx/sites-available/default'],
-}
-
 exec { 'enable-site':
   command => "ln -sf '/etc/nginx/sites-available/default' '/etc/nginx/sites-enabled/default'",
   path    => '/usr/bin:/usr/sbin:/bin',
@@ -122,7 +114,6 @@ exec { 'start-nginx':
   command => 'sudo service nginx restart',
   path    => '/usr/bin:/usr/sbin:/bin',
   require => [
-    File['/etc/nginx/sites-enabled/default'],
     Exec['enable-site'],
     Package['nginx'],
     File['/data/web_static/releases/test/index.html'],
