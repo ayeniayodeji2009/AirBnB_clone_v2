@@ -113,7 +113,7 @@ file { '/etc/nginx/sites-enabled/airbnbclone':
 }
 
 exec { 'start-nginx':
-  command => 'service nginx restart',
+  command => 'sudo service nginx restart',
   path    => '/usr/bin:/usr/sbin:/bin',
   require => [
     File['/etc/nginx/sites-enabled/airbnbclone'],
@@ -121,3 +121,5 @@ exec { 'start-nginx':
     File['/data/web_static/releases/test/index.html'],
   ],
 }
+
+Exec['start-nginx']
