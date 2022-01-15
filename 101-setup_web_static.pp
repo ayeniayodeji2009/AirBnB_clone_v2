@@ -5,6 +5,11 @@ exec { 'apt-get-update':
   path    => '/usr/bin:/usr/sbin:/bin',
 }
 
+exec { 'remove-current':
+  command => 'rm -rf /data/web_static/current',
+  path    => '/usr/bin:/usr/sbin:/bin',
+}
+
 package { 'nginx':
   ensure  => installed,
   require => Exec['apt-get-update'],
@@ -47,11 +52,6 @@ file { '/data/web_static/releases/test/index.html':
 ",
   replace => true,
   require => Exec['make-static-files-folder'],
-}
-
-exec { 'remove-current':
-  command => 'rm -rf /data/web_static/current',
-  path    => '/usr/bin:/usr/sbin:/bin',
 }
 
 file { '/data/web_static/current':
