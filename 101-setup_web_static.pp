@@ -105,18 +105,18 @@ file { '/etc/nginx/sites-available/airbnbclone':
   ],
 }
 
-file { '/etc/nginx/sites-enabled/airbnbclone':
+file { '/etc/nginx/sites-enabled/default':
   ensure  => link,
-  target  => '/etc/nginx/sites-available/airbnbclone',
+  target  => '/etc/nginx/sites-available/default',
   replace => true,
-  require => File['/etc/nginx/sites-available/airbnbclone'],
+  require => File['/etc/nginx/sites-available/default'],
 }
 
 exec { 'start-nginx':
   command => 'sudo service nginx restart',
   path    => '/usr/bin:/usr/sbin:/bin',
   require => [
-    File['/etc/nginx/sites-enabled/airbnbclone'],
+    File['/etc/nginx/sites-enabled/default'],
     Package['nginx'],
     File['/data/web_static/releases/test/index.html'],
   ],
