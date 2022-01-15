@@ -10,30 +10,26 @@ package { 'nginx':
   require => Exec['apt-get-update'],
 }
 
-file { '/var/www':
+-> file { '/var/www':
   ensure  => directory,
   mode    => '0755',
   recurse => true,
-  require => Package['nginx'],
 }
 
-file { '/var/www/html/index.html':
+-> file { '/var/www/html/index.html':
   content => 'Hello, World!',
-  require => File['/var/www'],
 }
 
-file { '/var/www/error/404.html':
+-> file { '/var/www/error/404.html':
   content => "Ceci n'est pas une page",
-  require => File['/var/www'],
 }
 
-exec { 'make-static-files-folder':
+-> exec { 'make-static-files-folder':
   command => 'mkdir -p /data/web_static/releases/test /data/web_static/shared',
   path    => '/usr/bin:/usr/sbin:/bin',
-  require => Package['nginx'],
 }
 
-file { '/data/web_static/releases/test/index.html':
+-> file { '/data/web_static/releases/test/index.html':
   content =>
 "<!DOCTYPE html>
 <html lang='en-US'>
@@ -46,31 +42,25 @@ file { '/data/web_static/releases/test/index.html':
 </html>
 ",
   replace => true,
-  require => Exec['make-static-files-folder'],
 }
 
-exec { 'remove-current':
+-> exec { 'remove-current':
   command => 'rm -rf /data/web_static/current',
   path    => '/usr/bin:/usr/sbin:/bin',
 }
 
-file { '/data/web_static/current':
+-> file { '/data/web_static/current':
   ensure  => link,
   target  => '/data/web_static/releases/test/',
   replace => true,
-  require => [
-    Exec['remove-current'],
-    File['/data/web_static/releases/test/index.html'],
-  ],
 }
 
-exec { 'change-data-owner':
+-> exec { 'change-data-owner':
   command => 'chown -hR ubuntu:ubuntu /data',
   path    => '/usr/bin:/usr/sbin:/bin',
-  require => File['/data/web_static/current'],
 }
 
-file { '/etc/nginx/sites-available/airbnbclone':
+-> file { '/etc/nginx/sites-available/airbnbclone':
   ensure  => present,
   mode    => '0644',
   content =>
@@ -97,26 +87,14 @@ file { '/etc/nginx/sites-available/airbnbclone':
 		internal;
 	}
 }",
-  require => [
-    Package['nginx'],
-    File['/var/www/html/index.html'],
-    File['/var/www/error/404.html'],
-    Exec['change-data-owner']
-  ],
 }
 
-file { '/etc/nginx/sites-enabled/airbnbclone':
+-> file { '/etc/nginx/sites-enabled/airbnbclone':
   ensure  => link,
   target  => '/etc/nginx/sites-available/airbnbclone',
   replace => true,
-  require => File['/etc/nginx/sites-available/airbnbclone'],
 }
 
-service { 'nginx':
+-> service { 'nginx':
   ensure  => running,
-  require => [
-    File['/etc/nginx/sites-enabled/airbnbclone'],
-    Package['nginx'],
-    File['/data/web_static/releases/test/index.html'],
-  ],
 }
