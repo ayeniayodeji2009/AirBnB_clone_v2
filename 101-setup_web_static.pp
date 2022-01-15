@@ -112,8 +112,9 @@ file { '/etc/nginx/sites-enabled/airbnbclone':
   require => File['/etc/nginx/sites-available/airbnbclone'],
 }
 
-service { 'nginx':
-  ensure  => running,
+exec { 'start-nginx':
+  command => 'service nginx restart',
+  path    => '/usr/bin:/usr/sbin:/bin',
   require => [
     File['/etc/nginx/sites-enabled/airbnbclone'],
     Package['nginx'],
