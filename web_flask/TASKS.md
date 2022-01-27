@@ -82,7 +82,7 @@
   + Update [`State`](../models/state.py) - If it's not already present.
     + If your storage engine is not `DBStorage`, add a public getter method `cities` to return the list of `City` objects from storage linked to the current `State`.
 
-+ [ ] 8. List of states<br/>_**[7-states_list.py](7-states_list.py)**_ contains a script that starts a Flask web application.
++ [x] 8. List of states<br/>_**[7-states_list.py](7-states_list.py)**_ contains a script that starts a Flask web application.
   + Your web application must be listening on `0.0.0.0`, port `5000`.
   + You must use `storage` for fetching data from the storage engine (`FileStorage` or `DBStorage`) => `from models import storage` and `storage.all(...)`.
   + After each request you must remove the current SQLAlchemy Session:
