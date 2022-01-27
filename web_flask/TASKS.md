@@ -1,6 +1,6 @@
 # Tasks To Complete
 
-+ [ ] 0. Hello Flask!<br/>_**[0-hello_route.py](0-hello_route.py)**_ contains a script that starts a Flask web application.
++ [x] 0. Hello Flask!<br/>_**[0-hello_route.py](0-hello_route.py)**_ contains a script that starts a Flask web application.
   + Your web application must be listening on `0.0.0.0`, port `5000`.
   + Routes:
     + `/`: display "Hello HBNB!".
