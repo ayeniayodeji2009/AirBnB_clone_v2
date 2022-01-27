@@ -42,7 +42,7 @@
     + `/number/<n>`: display "`n` is a number" **only** if `n` is an integer.
   + You must use the option `strict_slashes=False` in your route definition.
 
-+ [ ] 5. Number template<br/>_**[5-number_template.py](5-number_template.py)**_ contains a script that starts a Flask web application.
++ [x] 5. Number template<br/>_**[5-number_template.py](5-number_template.py)**_ contains a script that starts a Flask web application.
   + Your web application must be listening on `0.0.0.0`, port `5000`.
   + Routes:
     + `/`: display "Hello HBNB!".
