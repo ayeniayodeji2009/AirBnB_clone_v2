@@ -73,7 +73,7 @@
       + `H1` tag: "Number: `n` is even|odd" inside the tag `BODY`.
   + You must use the option `strict_slashes=False` in your route definition.
 
-+ [ ] 7. Improve engines
++ [x] 7. Improve engines
   + **INFO**: Before using Flask to display our HBNB data, you will need to update some part of our engine.
   + Update [`FileStorage`](../models/engine/file_storage.py):
     + Add a public method `def close(self):`: call `reload()` method for deserializing the JSON file to objects.
