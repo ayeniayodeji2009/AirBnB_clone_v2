@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+'''A simple Flask web application.
+'''
+from flask import Flask, render_template
+
+from models import storage
+from models.state import State
+
+
+app = Flask(__name__)
+'''The Flask application instance.'''
+
+
+@app.route('/states/<state_id>', strict_slashes=False)
+@app.route('/states', strict_slashes=False, defaults={'state_id': None})
+def states(state_id):
+    '''The states page.'''
+    states = None
+    state = None
+    all_states = list(storage.all(State).values())
+    if state_id is not None:
+        res = list(filter(lambda x: x.id == state_id, all_states))
+        if len(res) > 0:
+            state = res[0]
+            state.cities.sort(key=lambda x: x.name)
+    else:
+        states = all_states
+        states.sort(key=lambda x: x.name)
+    ctxt = {
+        'states': states,
+        'state': state
+    }
+    return render_template('9-states.html', **ctxt)
+
+
+@app.teardown_appcontext
+def flask_teardown(exc):
+    '''The Flask app/request context end event listener.'''
+    storage.close()
+
+
+if __name__ == '__main__':
+    app.run()
