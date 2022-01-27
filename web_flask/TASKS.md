@@ -31,7 +31,7 @@
       + The default value of `text` is "is cool".
   + You must use the option `strict_slashes=False` in your route definition.
 
-+ [ ] 4. Is it a number?<br/>_**[4-number_route.py](4-number_route.py)**_ contains a script that starts a Flask web application.
++ [x] 4. Is it a number?<br/>_**[4-number_route.py](4-number_route.py)**_ contains a script that starts a Flask web application.
   + Your web application must be listening on `0.0.0.0`, port `5000`.
   + Routes:
     + `/`: display "Hello HBNB!".
