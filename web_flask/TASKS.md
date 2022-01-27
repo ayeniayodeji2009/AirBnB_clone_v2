@@ -56,7 +56,7 @@
       + `H1` tag: "Number: `n`" inside the tag `BODY`.
   + You must use the option `strict_slashes=False` in your route definition.
 
-+ [ ] 6. Odd or even?<br/>_**[6-number_odd_or_even.py](6-number_odd_or_even.py)**_ contains a script that starts a Flask web application.
++ [x] 6. Odd or even?<br/>_**[6-number_odd_or_even.py](6-number_odd_or_even.py)**_ contains a script that starts a Flask web application.
   + Your web application must be listening on `0.0.0.0`, port `5000`.
   + Routes:
     + `/`: display "Hello HBNB!".
