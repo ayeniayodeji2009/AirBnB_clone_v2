@@ -13,14 +13,14 @@ app.url_map.strict_slashes = False
 
 
 @app.route('/states')
-@app.route('/states/<state_id>')
-def states(state_id=None):
+@app.route('/states/<id>')
+def states(id=None):
     '''The states page.'''
     states = None
     state = None
     all_states = list(storage.all(State).values())
-    if state_id is not None:
-        res = list(filter(lambda x: x.id == state_id, all_states))
+    if id is not None:
+        res = list(filter(lambda x: x.id == id, all_states))
         if len(res) > 0:
             state = res[0]
             state.cities.sort(key=lambda x: x.name)
