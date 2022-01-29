@@ -17,6 +17,8 @@ def cities_by_states():
     '''The cities_by_states page.'''
     all_states = list(storage.all(State).values())
     all_states.sort(key=lambda x: x.name)
+    for state in all_states:
+        state.cities.sort(key=lambda x: x.name)
     ctxt = {
         'states': all_states
     }

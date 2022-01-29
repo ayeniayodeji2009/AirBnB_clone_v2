@@ -19,14 +19,15 @@ def states(state_id=None):
     states = None
     state = None
     all_states = list(storage.all(State).values())
+    all_states.sort(key=lambda x: x.name)
+    for state in all_states:
+        state.cities.sort(key=lambda x: x.name)
     if state_id is not None:
         res = list(filter(lambda x: x.id == state_id, all_states))
         if len(res) > 0:
             state = res[0]
-            state.cities.sort(key=lambda x: x.name)
     else:
         states = all_states
-        states.sort(key=lambda x: x.name)
     ctxt = {
         'states': states,
         'state': state
