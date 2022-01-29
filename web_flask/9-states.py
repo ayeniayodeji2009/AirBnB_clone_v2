@@ -9,11 +9,12 @@ from models.state import State
 
 app = Flask(__name__)
 '''The Flask application instance.'''
+app.url_map.strict_slashes = False
 
 
-@app.route('/states/<state_id>', strict_slashes=False)
-@app.route('/states', strict_slashes=False, defaults={'state_id': None})
-def states(state_id):
+@app.route('/states')
+@app.route('/states/<state_id>')
+def states(state_id=None):
     '''The states page.'''
     states = None
     state = None
@@ -40,4 +41,4 @@ def flask_teardown(exc):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port='5000')

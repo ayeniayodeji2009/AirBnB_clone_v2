@@ -9,9 +9,10 @@ from models.state import State
 
 app = Flask(__name__)
 '''The Flask application instance.'''
+app.url_map.strict_slashes = False
 
 
-@app.route('/cities_by_states', strict_slashes=False)
+@app.route('/cities_by_states')
 def cities_by_states():
     '''The cities_by_states page.'''
     all_states = list(storage.all(State).values())
@@ -29,4 +30,4 @@ def flask_teardown(exc):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port='5000')
