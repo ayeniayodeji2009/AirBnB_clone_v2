@@ -1,6 +1,6 @@
 -- Sample data for Task 12
 USE hbnb_dev_db;
-INSERT INTO `amenities` VALUES
+INSERT INTO amenities(id, created_at, updated_at, name) VALUES
   ('017ec502-e84a-4a0f-92d6-d97e27bb6bdf','2017-03-25 02:17:06','2017-03-25 02:17:06','Cable TV'),
   ('0d375b05-5ef9-4d43-aaca-436762bb25bf','2017-03-25 02:17:06','2017-03-25 02:17:06','Lockbox'),
   ('12e9ccb4-03e4-4f82-ac3d-4fc7e3ebfbfe','2017-03-25 02:17:06','2017-03-25 02:17:06','Internet'),
@@ -49,7 +49,7 @@ INSERT INTO `amenities` VALUES
   ('f7a087bb-13e2-463d-a951-b8feb7da899f','2017-03-25 02:17:06','2017-03-25 02:17:06','Smoking allowed'),
   ('f7c854a4-f565-4aa5-8542-c4e17c498ef1','2017-03-25 02:17:06','2017-03-25 02:17:06','First aid kit')
 ;
-INSERT INTO `states` VALUES
+INSERT INTO states(id, created_at, updated_at, name) VALUES
   ('0e391e25-dd3a-45f4-bce3-4d1dea83f3c7','2017-03-25 02:17:06','2017-03-25 02:17:06','Alabama'),
   ('10098698-bace-4bfb-8c0a-6bae0f7f5b8f','2017-03-25 02:17:06','2017-03-25 02:17:06','Oregon'),
   ('2b9a4627-8a9e-4f32-a752-9a84fa7f4efd','2017-03-25 02:17:06','2017-03-25 02:17:06','Louisiana'),
@@ -62,7 +62,7 @@ INSERT INTO `states` VALUES
   ('d2398800-dd87-482b-be21-50a3063858ad','2017-03-25 02:17:06','2017-03-25 02:17:06','Illinois'),
   ('f8d21261-3e79-4f5c-829a-99d7452cd73c','2017-03-25 02:17:06','2017-03-25 02:17:06','Colorado')
 ;
-INSERT INTO `cities` VALUES
+INSERT INTO cities(id, created_at, updated_at, name, state_id) VALUES
   ('05b0b99c-f10e-4e3a-88d1-b3187d6998ee','2017-03-25 02:17:06','2017-03-25 02:17:06','San Francisco','9799648d-88dc-4e63-b858-32e6531bec5c'),
   ('14e2f358-f8fb-419c-8e8f-0017f971d82d','2017-03-25 02:17:06','2017-03-25 02:17:06','Tempe','459e021a-e794-447d-9dd2-e03b7963f7d2'),
   ('14e49d0b-7363-40e3-8854-a89e96481f67','2017-03-25 02:17:06','2017-03-25 02:17:06','Joliet','d2398800-dd87-482b-be21-50a3063858ad'),
@@ -96,7 +96,7 @@ INSERT INTO `cities` VALUES
   ('f14fefb3-c6e4-42f6-8a5a-ee704a101f8b','2017-03-25 02:17:06','2017-03-25 02:17:06','Fairfield','0e391e25-dd3a-45f4-bce3-4d1dea83f3c7'),
   ('f3923bdf-81f2-45e9-a5e1-fd128e122d45','2017-03-25 02:17:06','2017-03-25 02:17:06','Tupelo','bbee73a7-2f71-47e6-938a-2d9e932d4ff9')
 ;
-INSERT INTO `users` VALUES
+INSERT INTO users(id, created_at, updated_at, email, password, first_name, last_name) VALUES
   ('00a11245-12fa-436e-9ccc-967417f8c30a','2017-03-25 02:17:06','2017-03-25 02:17:06','noemail6@gmail.com','pwd6','Todd','Seanez'),
   ('00e93fc3-53ff-4da4-8e72-faa5216f81bb','2017-03-25 02:17:06','2017-03-25 02:17:06','noemail28@gmail.com','pwd28','Richard','Steere'),
   ('150e591e-486b-48ee-be42-4aecba665020','2017-03-25 02:17:06','2017-03-25 02:17:06','noemail23@gmail.com','pwd23','Cecilia','Boes'),
